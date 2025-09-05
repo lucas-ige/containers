@@ -15,7 +15,7 @@ For a more lightweight experience, I instead choose to install just the podman c
 brew install podman
 ```
 
-The containers technology relies on Linux-specific features and most (or all?) containers are based on GNU/Linux
+The containers technology relies on Linux-specific features. Besides, many containers are based on GNU/Linux
 images. Podman therefore needs a virtual machine (VM) to run containers on MacOS. To download such a virtual machine,
 run:
 
@@ -33,26 +33,31 @@ However, once per session (ie. every time you log out or restart your computer),
 podman machine start
 ```
 
-# Build an image
+# Build an image with podman
 
 Each directory in ./images corresponds to an image that can be built with podman.
 
-By convention, the instructions to build an image are in a file named `Containerfile`.
+By convention, the instructions to build an image are in a file named `Containerfile`. These files use the same syntax
+as [Docker](https://www.docker.com/) files.
 
 To build an image, go to the image's directory and run:
 
 ```sh
-podman build --format=docker -t $name-of-the-image
+podman build --format=docker -t $name-of-the-image .
 ```
 
-This will build the image using the instructions in `Containerfile` for the host's architecture (ie for arm64 on MacOS
-with Silicon chips). You can build an image for another architecture as follows:
+This will build the image using the instructions in `Containerfile` for the architecture of the system where the
+command was run (eg arm64 when run on MacOS with a Silicon chip). You can build an image for another architecture as
+follows:
 
 ```sh
-podman build --platform linux/amd64 --format=docker -t $name-of-the-image
+podman build --platform=linux/amd64 --format=docker -t $name-of-the-image .
 ```
 
 # Useful links
+
+ - The [Dockerfile reference](https://docs.docker.com/reference/dockerfile/) documents all the instructions that can be
+   used in a Docker-like `Containerfile`.
 
  - The [RedHat documentation on podman and
    containers](https://docs.redhat.com/en/documentation/red_hat_enterprise_linux/10/html/building_running_and_managing_containers)

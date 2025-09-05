@@ -1,0 +1,22 @@
+# Copyright (c) 2025-now Institut des Géosciences de l'Environnement, France.
+#
+# License: BSD 3-clause "new" or "revised" license (BSD-3-Clause).
+#
+# Image providing a GNU/Linux Python environment suitable for geoscience.
+#
+# To run a Python script with podman through a container based on this image:
+#
+# podman run --rm \
+#     $tag-of-the-image \
+#     /bin/bash -c \
+#     "source /python-geoscience/venv/bin/activate python3 $the_script.py"
+#
+FROM registry.access.redhat.com/ubi8/ubi:8.10
+COPY --chmod=400 requirements.txt /python-geoscience/
+RUN <<EOF
+dnf -y install python3.12 python3.12-devel python3.12-pip gcc-c++
+python3 -m venv /python-geoscience/venv
+source /python-geoscience/venv/bin/activate
+python3 -m pip install --upgrade pip
+python3 -m pip install -r /python-geoscience/requirements.txt
+EOF
