@@ -35,7 +35,7 @@ podman machine start
 
 # Build an image with podman
 
-Each directory in ./images corresponds to an image that can be built with podman.
+Each directory in [./images](./images) corresponds to an image that can be built with podman.
 
 By convention, the instructions to build an image are in a file named `Containerfile`. These files use the same syntax
 as [Docker](https://www.docker.com/) files.
