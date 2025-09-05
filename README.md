@@ -9,7 +9,7 @@ I use [podman](https://podman.io/) to create and manage images.
 You can install the podman desktop client from the official website (cf. link above), which lets you use podman out of
 the box.
 
-For a more lightweight experience, I choose to install just the podman command-line tools with [homebrew](https://brew.sh/) instead:
+For a more lightweight experience, I instead choose to install just the podman command-line tools with [homebrew](https://brew.sh/):
 
 ```sh
 brew install podman
