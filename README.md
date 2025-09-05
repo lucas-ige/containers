@@ -112,6 +112,12 @@ Remove a container from the list:
 podman rm $container_name
 ```
 
+Make tar file of existing image so that it can be transfered to another machine:
+
+```sh
+podman save -o $my_tar_file $the_image
+```
+
 # Useful links
 
  - The [Dockerfile reference](https://docs.docker.com/reference/dockerfile/) documents all the instructions that can be
