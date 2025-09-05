@@ -40,15 +40,15 @@ Each directory in [./images](./images) corresponds to an image that can be built
 By convention, the instructions to build an image are in a file named `Containerfile`. These files use the same syntax
 as [Docker](https://www.docker.com/) files.
 
-To build an image, go to the image's directory and run:
+To build an image, go to the image's directory and run (choose any tag you like for your image):
 
 ```sh
-podman build --format=docker -t $name-of-the-image .
+podman build --format=docker -t $tag_of_the_image .
 ```
 
 This will build the image using the instructions in `Containerfile` for the architecture of the system where the
 command was run (eg arm64 when run on MacOS with a Silicon chip). You can build an image for another architecture as
-follows (choose any tag you like for your image):
+follows:
 
 ```sh
 podman build --platform=linux/amd64 --format=docker -t $tag_of_the_image .
