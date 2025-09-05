@@ -48,10 +48,68 @@ podman build --format=docker -t $name-of-the-image .
 
 This will build the image using the instructions in `Containerfile` for the architecture of the system where the
 command was run (eg arm64 when run on MacOS with a Silicon chip). You can build an image for another architecture as
-follows:
+follows (choose any tag you like for your image):
 
 ```sh
-podman build --platform=linux/amd64 --format=docker -t $name-of-the-image .
+podman build --platform=linux/amd64 --format=docker -t $tag_of_the_image .
+```
+
+# Managing images and containers with podman
+
+A container is an instance of an image. You can run several separate containers initialized from the same image.
+
+List available images:
+
+```sh
+podman image list
+```
+
+Remove an image:
+
+```sh
+podman image rm $the_image
+```
+
+List running containers:
+
+```sh
+podman ps
+```
+
+List all containers (those that are running and those that are stopped):
+
+```sh
+podman ps -a
+```
+
+Run a container from an image in none-interactive mode:
+
+```sh
+podman run $the_image
+```
+
+Use option `--rm` if you do not want the container to be in the list (`podman ps -a`) after it has finished running:
+
+```sh
+podman run --rm $the_image
+```
+
+Use the option `-it` to run a container in interactive mode:
+
+```sh
+podman run -it $the_image
+```
+
+Run a command through a container:
+
+```sh
+podman run $the_image $the_command $command_arg1 $command_arg2
+```
+
+Remove a container from the list:
+
+```sh
+podman rm $container_name
 ```
 
 # Useful links

@@ -7,7 +7,7 @@
 # To run a Python script with podman through a container based on this image:
 #
 # podman run --rm \
-#     $tag-of-the-image \
+#     $tag_of_the_image \
 #     /bin/bash -c \
 #     "source /python-geoscience/venv/bin/activate python3 $the_script.py"
 #
