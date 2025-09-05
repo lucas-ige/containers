@@ -1,0 +1,8 @@
+# Copyright (c) 2025-now Institut des Géosciences de l'Environnement, France.
+#
+# License: BSD 3-clause "new" or "revised" license (BSD-3-Clause).
+#
+# Image providing a GNU/Linux environment for FORTRAN development.
+#
+FROM registry.access.redhat.com/ubi8/ubi:8.10
+RUN dnf -y install gcc-gfortran
