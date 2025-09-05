@@ -1,1 +1,1 @@
-This image sets up the Python environment I use for geosciences.
+This image sets up the Python environment I use for geoscience.
