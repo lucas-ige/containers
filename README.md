@@ -118,6 +118,40 @@ Make tar file of existing image so that it can be transfered to another machine:
 podman save -o $my_tar_file $the_image
 ```
 
+# Running containers with pcocc
+
+I use [pcocc](https://pcocc.readthedocs.io/en/latest/manpages/man1/pcocc.html) on a supercomputer where it is already
+installed and configured. I use it to run containers created from images that I prepared on a different machine and
+that I saved as a `tar` file (cf documentation above). You can run `pcocc` or its more recent Rust re-implementation
+`pcoss-rs`.
+
+The first step is to import the image that will be used to spawn containers:
+
+```sh
+pcocc-rs image import docker-archive:$the_image_as_tar_file $tag_of_the_image
+```
+
+You can list available images with:
+
+```sh
+pcocc-rs image list
+```
+
+To run a command through a container:
+
+```sh
+pcocc-rs run $tag_of_the_image $the_command $command_arg1 $command_arg2
+```
+
+You must use `--` before specifying the list of dashed options for your program, for instance:
+
+```sh
+pcocc-rs run $tag_of_the_image /bin/bash -- --norc -c "echo Hello World"
+```
+
+Using the `--norc` option with `/bin/bash` is useful in environments where the host's home directory is mounted in the
+container (we do not want `bash` to source the host's user's `~/.bashrc` file).
+
 # Useful links
 
  - The [Dockerfile reference](https://docs.docker.com/reference/dockerfile/) documents all the instructions that can be
