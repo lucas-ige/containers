@@ -9,7 +9,7 @@
 # podman run --rm \
 #     $tag_of_the_image \
 #     /bin/bash -c \
-#     "source /python-geoscience/venv/bin/activate python3 $the_script.py"
+#     "source /python-geoscience/venv/bin/activate ; python3 $the_script.py"
 #
 FROM registry.access.redhat.com/ubi8/ubi:8.10
 COPY --chmod=400 requirements.txt /python-geoscience/
