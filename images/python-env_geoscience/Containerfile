@@ -14,7 +14,7 @@
 FROM registry.access.redhat.com/ubi8/ubi:8.10
 COPY --chmod=400 requirements.txt /python-geoscience/
 RUN <<EOF
-dnf -y install python3.12 python3.12-devel python3.12-pip gcc-c++
+dnf -y install python3.12 python3.12-tkinter python3.12-devel python3.12-pip gcc-c++
 python3 -m venv /python-geoscience/venv
 source /python-geoscience/venv/bin/activate
 python3 -m pip install --upgrade pip
