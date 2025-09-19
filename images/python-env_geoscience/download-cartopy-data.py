@@ -24,7 +24,6 @@ crs = cartopy.crs.PlateCarree()
 figure_name = "figure.pdf"
 
 for feature in features:
-    print("Downloading feature: %s..." % ", ".join(feature))
     ax = plt.figure().add_subplot(1, 1, 1, projection=crs)
     ax.add_feature(cartopy.feature.NaturalEarthFeature(*feature))
     plt.savefig(figure_name)
