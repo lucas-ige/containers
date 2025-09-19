@@ -15,11 +15,13 @@ FROM registry.access.redhat.com/ubi8/ubi:8.10
 ARG dir_python=/python-geoscience
 COPY --chmod=400 requirements.txt $dir_python/
 COPY --chmod=400 download-cartopy-data.py $dir_python/
+COPY --chmod=400 siteconfig_cartopy.py $dir_python/
 RUN <<EOF
 dnf -y install python3.12 python3.12-tkinter python3.12-devel python3.12-pip gcc-c++
 python3 -m venv $dir_python/venv
 source $dir_python/venv/bin/activate
 python3 -m pip install --upgrade pip
 python3 -m pip install -r $dir_python/requirements.txt
+mv $dir_python/siteconfig_cartopy.py $dir_python/venv/lib/python3.12/site-packages/cartopy/siteconfig.py
 python3 $dir_python/download-cartopy-data.py
 EOF
