@@ -1,6 +1,6 @@
 This repository contains resources I use to create and run containers.
 
-It is hosted [here on GitHub](https://github.com/lucas-ige/containers) and [here on my institutional GitLab](https://gricad-gitlab.univ-grenoble-alpes.fr/bastiluc/containers).
+It is hosted [here on GitHub](https://github.com/lucas-ige/containers) and [here on my institutional GitLab](https://gricad-gitlab.univ-grenoble-alpes.fr/lucas-ige/containers).
 
 I use [podman](https://podman.io/) to create and manage images.
 
