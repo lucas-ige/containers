@@ -7,9 +7,7 @@
 # This image provides the Ruff executable, but also emacs and vim, both
 # configured to auto-format Python code with Ruff on save.
 #
-FROM docker.io/library/fedora
+FROM docker.io/library/fedora:latest
 RUN <<EOF
-dnf search emacs
-dnf search vim
-dnf search ruff
+dnf -y install emacs ruff
 EOF
