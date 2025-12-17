@@ -14,6 +14,7 @@ COPY --chmod=400 vim_install-lsp.vim $dir_config/
 COPY --chmod=400 vim_ruff-auto-format.vim $dir_config/
 COPY --chmod=400 emacs_ruff-auto-format.el $dir_config/
 RUN <<EOF
+dnf -y upgrade --refresh
 dnf -y install git vim-enhanced emacs ruff
 mkdir -pv $dir_software
 git clone https://github.com/junegunn/vim-plug.git $dir_software/vim-plug
