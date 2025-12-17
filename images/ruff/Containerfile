@@ -1,0 +1,15 @@
+# Copyright (c) 2025-now Institut des Géosciences de l'Environnement, France.
+#
+# License: BSD 3-clause "new" or "revised" license (BSD-3-Clause).
+#
+# Image providing a GNU/Linux environment for using Ruff on Python code.
+#
+# This image provides the Ruff executable, but also emacs and vim, both
+# configured to auto-format Python code with Ruff on save.
+#
+FROM docker.io/library/fedora
+RUN <<EOF
+dnf search emacs
+dnf search vim
+dnf search ruff
+EOF
