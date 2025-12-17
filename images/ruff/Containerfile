@@ -8,6 +8,8 @@
 # configured to auto-format Python code with Ruff on save.
 #
 FROM docker.io/library/fedora:latest
+ARG dir_config=/xdg_config_home
+COPY --chmod=400 emacs_ruff-auto-format.el $dir_config/
 RUN <<EOF
 dnf -y install emacs ruff
 EOF
