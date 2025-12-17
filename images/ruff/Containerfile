@@ -8,8 +8,15 @@
 # configured to auto-format Python code with Ruff on save.
 #
 FROM docker.io/library/fedora:latest
-ARG dir_config=/xdg_config_home
+ARG dir_config=/config-files
+ARG dir_software=/third-party-software
+COPY --chmod=400 vim_install-lsp.vim $dir_config/
+COPY --chmod=400 vim_ruff-auto-format.vim $dir_config/
 COPY --chmod=400 emacs_ruff-auto-format.el $dir_config/
 RUN <<EOF
-dnf -y install emacs ruff
+dnf -y install git vim-enhanced emacs ruff
+mkdir -pv $dir_software
+git clone https://github.com/junegunn/vim-plug.git $dir_software/vim-plug
+mkdir -pv $dir_software/vim-plugged
+vim -es -c "source $dir_config/vim_install-lsp.vim" -c "qa!"
 EOF
