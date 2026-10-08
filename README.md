@@ -56,7 +56,7 @@ follows:
 podman build --platform=linux/amd64 --format=docker -t $tag_of_the_image .
 ```
 
-# Managing images and containers with podman
+# Manage images and containers with podman
 
 A container is an instance of an image. You can run several separate containers initialized from the same image.
 
@@ -120,7 +120,15 @@ Make tar file of existing image so that it can be transfered to another machine:
 podman save -o $my_tar_file $the_image
 ```
 
-# Running containers with pcocc
+# Convert from Docker image to Apptainer image
+
+First save your image as a `.rar` file as described above. Then:
+
+```sh
+apptainer build my-apptainer.sif docker-archive:$my_tar_file
+```
+
+# Run containers with pcocc
 
 I use [pcocc](https://pcocc.readthedocs.io/en/latest/manpages/man1/pcocc.html) on a supercomputer where it is already
 installed and configured. I use it to run containers created from images that I prepared on a different machine and
