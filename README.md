@@ -136,10 +136,10 @@ Start working interactively in a container:
 apptainer shell $my_container.sif
 ```
 
-Do not mount the user's home directory:
+Do not mount the user's home directory nor the current directory:
 
 ```sh
-apptainer shell --no-mount home $my_container.sif
+apptainer shell --no-mount home,cwd $my_container.sif
 ```
 
 # Run containers with pcocc
