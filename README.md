@@ -128,6 +128,20 @@ First save your image as a `.rar` file as described above. Then:
 apptainer build my-apptainer.sif docker-archive:$my_tar_file
 ```
 
+# Use apptainer
+
+Start working interactively in a container:
+
+```sh
+apptainer shell $my_container.sif
+```
+
+Do not mount the user's home directory:
+
+```sh
+apptainer shell --no-mount home $my_container.sif
+```
+
 # Run containers with pcocc
 
 I use [pcocc](https://pcocc.readthedocs.io/en/latest/manpages/man1/pcocc.html) on a supercomputer where it is already
