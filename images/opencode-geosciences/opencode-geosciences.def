@@ -4,33 +4,46 @@
 #
 # Apptainer definition file for an AI-ready geosciences image.
 #
-# If I ever resign myself to use AI-agents, I definitely do not want them to
-# have free-roaming access to the host system, hence this container.
+# If I ever resign myself to use AI-agents in the future, I definitely do not
+# want them to have free-roaming access to the host system, hence this
+# container.
 #
 # Note: this is work in progress.
 
 BootStrap: docker
 From: ubuntu:latest
 
+%files
+
+    # For Emacs
+    ~/.emacs /localhome/.emacs
+    ~/.emacs_local /localhome/.emacs_local
+
 %post
 
-    # Ubuntu uses Dash as the default shell, but we prefer Bash
+    # Ubuntu uses Dash as the default shell, but I prefer Bash
     export SHELL=/bin/bash
 
-    # We do not want the running container to have acces to our home directory
-    # on the host machine, so we create and set up a local home
-    # (run the container with "--no-mount home,cwd")
-    mkdir /localhome
+    # I do not want the running container to have access to my home directory
+    # on the host machine, so I create and set up a local home
+    # (I typically run the container with "--no-mount home,cwd")
+    mkdir -p /localhome
     export HOME=/localhome
     cd $HOME
 
     # Update the system and install basic utilities
     apt-get -y update
     DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata postfix
-    apt-get -y install curl
+    apt-get -y install less curl git
 
-    # Prepare emacs the way we like it
+    # Prepare emacs the way I like it
     apt-get -y install emacs-nox
+    mkdir -p .emacs.d/packages
+    cd .emacs.d/packages
+    git clone https://github.com/auto-complete/auto-complete.git
+    git clone https://github.com/auto-complete/popup-el.git
+    git clone https://github.com/auto-complete/fuzzy-el.git
+    cd $HOME
 
     # Install programs and libraries useful for the geosciences
     apt-get -y install \
