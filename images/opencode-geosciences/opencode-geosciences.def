@@ -1,0 +1,56 @@
+# Copyright (c) 2026-now Institut des Géosciences de l'Environnement, France.
+#
+# License: BSD 3-clause "new" or "revised" license (BSD-3-Clause).
+#
+# Apptainer definition file for an AI-ready geosciences image.
+#
+# If I ever resign myself to use AI-agents, I definitely do not want them to
+# have free-roaming access to the host system, hence this container.
+#
+# Note: this is work in progress.
+
+BootStrap: docker
+From: ubuntu:latest
+
+%post
+
+    # Ubuntu uses Dash as the default shell, but we prefer Bash
+    export SHELL=/bin/bash
+
+    # We do not want the running container to have acces to our home directory
+    # on the host machine, so we create and set up a local home
+    # (run the container with "--no-mount home,cwd")
+    mkdir /localhome
+    export HOME=/localhome
+    cd $HOME
+
+    # Update the system and install basic utilities
+    apt-get -y update
+    DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata postfix
+    apt-get -y install curl
+
+    # Prepare emacs the way we like it
+    apt-get -y install emacs-nox
+
+    # Install programs and libraries useful for the geosciences
+    apt-get -y install \
+        gfortran \
+        openmpi-bin libopenmpi-dev \
+        netcdf-bin libnetcdf-dev libnetcdff-dev \
+        nco cdo
+
+    # Install micromamba
+    curl -L micro.mamba.pm > ./install_micromamba.sh
+    /bin/bash ./install_micromamba.sh
+
+    # Install opencode (not done yet)
+
+%environment
+    export SHELL=/bin/bash
+    export HOME=/localhome
+
+%labels
+    Author Lucas Bastien
+
+%help
+    This is a general-purpose AI-ready container for the geosciences.
