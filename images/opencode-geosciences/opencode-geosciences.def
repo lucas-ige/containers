@@ -13,37 +13,42 @@
 BootStrap: docker
 From: ubuntu:latest
 
+%arguments
+    IMAGE_NAME=opencode-geosciences
+    BASE_HOME_DIR=/containerhome
+    USER_NAME_ON_HOST=opencode_geosciences_user
+
 %files
 
-    # For Emacs
-    ~/.emacs /localhome/.emacs
-    ~/.emacs_local /localhome/.emacs_local
+    # For Bash customization
+    ../../utils/bashrc /{{ BASE_HOME_DIR }}/{{ USER_NAME_ON_HOST }}/.bashrc
+
+    # For Emacs customization
+    ~/.emacs {{ BASE_HOME_DIR }}/{{ USER_NAME_ON_HOST }}/.emacs
+    ~/.emacs_local {{ BASE_HOME_DIR }}/{{ USER_NAME_ON_HOST }}/.emacs_local
 
 %post
-
-    # Ubuntu uses Dash as the default shell, but I prefer Bash
-    export SHELL=/bin/bash
-
-    # I do not want the running container to have access to my home directory
-    # on the host machine, so I create and set up a local home
-    # (I typically run the container with "--no-mount home,cwd")
-    mkdir -p /localhome
-    export HOME=/localhome
-    cd $HOME
 
     # Update the system and install basic utilities
     apt-get -y update
     DEBIAN_FRONTEND=noninteractive apt-get -y install tzdata postfix
     apt-get -y install less curl git
 
-    # Prepare emacs the way I like it
+    # Ubuntu uses Dash as the default shell, but I prefer Bash
+    export SHELL=/bin/bash
+
+    # I do not want the running container to have access to my home directory
+    # on the host machine, so I create and set up a local user with its own
+    # home (I typically run the container with "--no-mount home,cwd")
+    useradd --create-home --base-dir {{ BASE_HOME_DIR }} --shell /bin/bash {{ USER_NAME_ON_HOST }}
+
+    # Prepare Emacs the way I like it
     apt-get -y install emacs-nox
-    mkdir -p .emacs.d/packages
-    cd .emacs.d/packages
-    git clone https://github.com/auto-complete/auto-complete.git
-    git clone https://github.com/auto-complete/popup-el.git
-    git clone https://github.com/auto-complete/fuzzy-el.git
-    cd $HOME
+    su -c "mkdir -p {{ BASE_HOME_DIR }}/{{ USER_NAME_ON_HOST }}/.emacs.d/packages" {{ USER_NAME_ON_HOST }}
+    cd {{ BASE_HOME_DIR }}/{{ USER_NAME_ON_HOST }}/.emacs.d/packages
+    su -c "git clone https://github.com/auto-complete/auto-complete.git" {{ USER_NAME_ON_HOST }}
+    su -c "git clone https://github.com/auto-complete/popup-el.git" {{ USER_NAME_ON_HOST }}
+    su -c "git clone https://github.com/auto-complete/fuzzy-el.git" {{ USER_NAME_ON_HOST }}
 
     # Install programs and libraries useful for the geosciences
     apt-get -y install \
@@ -52,15 +57,28 @@ From: ubuntu:latest
         netcdf-bin libnetcdf-dev libnetcdff-dev \
         nco cdo
 
+    # Install Python packages useful for the geosciences
+    apt-get -y install \
+        python3-cartopy \
+        python3-dask \
+        python3-netcdf4 \
+        python3-numpy \
+        python3-pandas \
+        python3-pyproj \
+        python3-scipy \
+        python3-shapely \
+        python3-xarray
+
     # Install micromamba
+    cd /usr/local/bin
     curl -L micro.mamba.pm > ./install_micromamba.sh
-    /bin/bash ./install_micromamba.sh
+    su -c "/bin/bash /usr/local/bin/install_micromamba.sh" {{ USER_NAME_ON_HOST }}
 
     # Install opencode (not done yet)
 
 %environment
-    export SHELL=/bin/bash
-    export HOME=/localhome
+    HOME={{ BASE_HOME_DIR }}/{{ USER_NAME_ON_HOST }}
+    PS1="\[\033[31m\]{{ IMAGE_NAME }}\[\033[00m\] \[\033[34m\](\D{%Hh%M})\[\033[00m\] \[\033[36m\]\w\[\033[00m\]\n"
 
 %labels
     Author Lucas Bastien

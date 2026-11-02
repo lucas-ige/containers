@@ -1,0 +1,19 @@
+#!/bin/bash
+#
+# Copyright (c) 2026-now Institut des Géosciences de l'Environnement, France.
+#
+# License: BSD 3-clause "new" or "revised" license (BSD-3-Clause).
+#
+# Basic bashrc configuration for containers
+
+umask 077
+
+# Basic aliases
+alias e="emacs -nw"
+alias re="%emacs"
+alias v="vim"
+alias gst="git status"
+alias gbr="git branch"
+alias gco="git checkout"
+alias grm="git remote"
+alias l="ls -lh --group-directories-first --color=auto"
