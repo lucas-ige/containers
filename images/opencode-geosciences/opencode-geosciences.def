@@ -76,6 +76,9 @@ From: ubuntu:latest
 
     # Install opencode (not done yet)
 
+    # Clean up
+    apt clean
+
 %environment
     HOME={{ BASE_HOME_DIR }}/{{ USER_NAME_ON_HOST }}
     PS1="\[\033[31m\]{{ IMAGE_NAME }}\[\033[00m\] \[\033[34m\](\D{%Hh%M})\[\033[00m\] \[\033[36m\]\w\[\033[00m\]\n"
