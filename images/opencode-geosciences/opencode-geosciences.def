@@ -8,6 +8,10 @@
 # want them to have free-roaming access to the host system, hence this
 # container.
 #
+# Run with:
+#
+# apptainer exec --no-mount home,hostfs,bind-paths opencode-geosciences.sif /bin/bash
+#
 # Note: this is work in progress.
 
 BootStrap: docker
