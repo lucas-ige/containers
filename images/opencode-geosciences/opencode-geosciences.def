@@ -30,6 +30,11 @@ From: ubuntu:latest
     # Ubuntu uses Dash as the default shell, but I prefer Bash
     export SHELL=/bin/bash
 
+    # Set up the locale
+    apt-get -y install locales
+    sed -i "s/^# en_US.UTF-8 UTF-8\$/en_US.UTF-8 UTF-8/" /etc/locale.gen
+    locale-gen en_US.UTF-8
+
     # I do not want the running container to have access to my home directory
     # on the host machine, so I create and set up a local user with its own
     # home (I typically run the container with "--no-mount home,cwd")
@@ -80,6 +85,8 @@ From: ubuntu:latest
     apt clean
 
 %environment
+    export LANG=en_US.UTF-8
+    export LC_ALL=en_US.UTF-8
     HOME={{ BASE_HOME_DIR }}/{{ USER_NAME_ON_HOST }}
     PS1="\[\033[31m\]{{ IMAGE_NAME }}\[\033[00m\] \[\033[34m\](\D{%Hh%M})\[\033[00m\] \[\033[36m\]\w\[\033[00m\]\n"
 
