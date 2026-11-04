@@ -18,16 +18,9 @@ From: ubuntu:latest
     BASE_HOME_DIR=/containerhome
     USER_NAME_ON_HOST=opencode_geosciences_user
 
-%files
-
-    # For Bash customization
-    ../../utils/bashrc /{{ BASE_HOME_DIR }}/{{ USER_NAME_ON_HOST }}/.bashrc
-
-    # For Emacs customization
-    ~/.emacs {{ BASE_HOME_DIR }}/{{ USER_NAME_ON_HOST }}/.emacs
-    ~/.emacs_local {{ BASE_HOME_DIR }}/{{ USER_NAME_ON_HOST }}/.emacs_local
-
 %post
+
+    user_home=/{{ BASE_HOME_DIR }}/{{ USER_NAME_ON_HOST }}
 
     # Update the system and install basic utilities
     apt-get -y update
@@ -42,10 +35,17 @@ From: ubuntu:latest
     # home (I typically run the container with "--no-mount home,cwd")
     useradd --create-home --base-dir {{ BASE_HOME_DIR }} --shell /bin/bash {{ USER_NAME_ON_HOST }}
 
+    # Prepare the shell the way I like it
+    cd ${user_home}
+    su -c "git clone https://github.com/lucas-ige/no-place-like-home.git" {{ USER_NAME_ON_HOST }}
+    echo "source ~/no-place-like-home/shells/rc.sh" >> ./.bashrc
+
     # Prepare Emacs the way I like it
     apt-get -y install emacs-nox
-    su -c "mkdir -p {{ BASE_HOME_DIR }}/{{ USER_NAME_ON_HOST }}/.emacs.d/packages" {{ USER_NAME_ON_HOST }}
-    cd {{ BASE_HOME_DIR }}/{{ USER_NAME_ON_HOST }}/.emacs.d/packages
+    cd ${user_home}
+    su -c "ln -s ./no-place-like-home/emacs/main-config.el .emacs" {{ USER_NAME_ON_HOST }}
+    su -c "mkdir -p .emacs.d/packages" {{ USER_NAME_ON_HOST }}
+    cd .emacs.d/packages
     su -c "git clone https://github.com/auto-complete/auto-complete.git" {{ USER_NAME_ON_HOST }}
     su -c "git clone https://github.com/auto-complete/popup-el.git" {{ USER_NAME_ON_HOST }}
     su -c "git clone https://github.com/auto-complete/fuzzy-el.git" {{ USER_NAME_ON_HOST }}
