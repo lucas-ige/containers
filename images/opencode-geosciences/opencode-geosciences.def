@@ -78,6 +78,11 @@ From: ubuntu:latest
         python3-shapely \
         python3-xarray
 
+    # Install Ruff
+    cd /usr/local/bin
+    curl -LsSf https://astral.sh/ruff/install.sh > ./install_ruff.sh
+    su -c "/bin/bash /usr/local/bin/install_ruff.sh" {{ USER_NAME_ON_HOST }}
+
     # Install micromamba
     cd /usr/local/bin
     curl -L micro.mamba.pm > ./install_micromamba.sh
