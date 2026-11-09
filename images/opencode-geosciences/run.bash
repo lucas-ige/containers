@@ -17,8 +17,8 @@ if [ $# -ne 1 ]; then
     echo "Usage:"
     echo "------"
     echo ""
-    echo "cd /where/you/want/to/work:"
-    echo "/path/to/this/script /path/to/opencode-geosciences.sif:"
+    echo "cd /where/you/want/to/work"
+    echo "/path/to/this/script /path/to/opencode-geosciences.sif"
     echo ""
     exit 0
 fi
