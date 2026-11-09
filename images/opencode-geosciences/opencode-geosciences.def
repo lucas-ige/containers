@@ -88,7 +88,10 @@ From: ubuntu:latest
     curl -L micro.mamba.pm > ./install_micromamba.sh
     su -c "/bin/bash /usr/local/bin/install_micromamba.sh" {{ USER_NAME_ON_HOST }}
 
-    # Install opencode (not done yet)
+    # Install opencode
+    cd /usr/local/bin
+    curl -fsSL https://opencode.ai/v2/install > ./install_opencode.sh
+    su -c "/bin/bash /usr/local/bin/install_opencode.sh" {{ USER_NAME_ON_HOST }}
 
     # Clean up
     apt clean
