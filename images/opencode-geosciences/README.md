@@ -19,4 +19,6 @@ To use the image:
 
 where (run.bash)[./run.bash] is the one located in this directory.
 
-This script will launch the image and mount your current working directory and (hopefully) nothing else. Note that the script creates a directory named `.opencode` in your current working directory, where OpenCode will store configuration files and other local information.
+This script will launch the image and mount your current working directory and (hopefully) nothing else. Note that the script creates a directory named `.opencode_fs` in your current working directory, where OpenCode will store configuration files and other local information. The run script will copy any relevant OpenCode configuration file it can find in your home directory on the host to this `.opencode_fs` directory prior to running the container.
+
+Note that this `.opencode_fs` will represent the user-wide OpenCode configuration inside the container (eg. `.opencode_fs/config` will be mounted to `~/.config`). On top of that, you can have a `.opencode` directory inside the current working directory to store your project-specific configuration.
