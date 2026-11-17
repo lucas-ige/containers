@@ -35,6 +35,7 @@ mkdir -pv ./.opencode_fs/cache/opencode
 [ -e ~/.config/opencode/skills ] && cp -Lv ~/.config/opencode/skills ./.opencode_fs/config/opencode/
 
 apptainer exec --no-mount home,hostfs,bind-paths \
+          --contain --ipc --net --userns --uts \
           --bind ./.opencode_fs/local/share/opencode:/containerhome/$(whoami)/.local/share/opencode \
           --bind ./.opencode_fs/local/state/opencode:/containerhome/$(whoami)/.local/state/opencode \
           --bind ./.opencode_fs/config/opencode:/containerhome/$(whoami)/.config/opencode \
