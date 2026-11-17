@@ -13,7 +13,7 @@ This will create the image file named `opencode-geosciences.sif`.
 To use the image:
 
 ```sh
-"cd /where/you/want/to/work:"
+"cd /where/you/want/to/work"
 "/path/to/run.bash /path/to/opencode-geosciences.sif"
 ```
 
