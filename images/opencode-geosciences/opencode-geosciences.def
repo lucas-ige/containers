@@ -6,7 +6,8 @@
 #
 # If I ever resign myself to use AI-agents in the future, I definitely do not
 # want them to have free-roaming access to the host system, hence this
-# container.
+# container. At any rate this image may be useful to anyone who wish to use
+# agents in a controlled environment.
 #
 # Run with:
 #
